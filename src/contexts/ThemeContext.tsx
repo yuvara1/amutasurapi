@@ -1,4 +1,11 @@
-import { createContext, useContext, useRef, useState, useCallback, useEffect } from "react";
+import {
+  createContext,
+  useContext,
+  useRef,
+  useState,
+  useCallback,
+  useEffect,
+} from "react";
 
 type Theme = "light" | "dark";
 
@@ -21,11 +28,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     try {
       const stored = localStorage.getItem("fb-theme") as Theme | null;
       if (stored === "dark" || stored === "light") return stored;
-<<<<<<< HEAD
-      return "light";
-=======
       return "dark";
->>>>>>> origin/bw-redesign-clean
     } catch {
       return "light";
     }
@@ -38,31 +41,45 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const applyTheme = useCallback((t: Theme) => {
     const el = containerRef.current;
     if (!el) return;
-    if (t === "dark") { el.classList.add("dark"); } else { el.classList.remove("dark"); }
+    if (t === "dark") {
+      el.classList.add("dark");
+    } else {
+      el.classList.remove("dark");
+    }
   }, []);
 
   /* Re-run whenever theme changes. Also run on first render after
      the ref is populated (AppShell mounts, ref gets set). */
   useEffect(() => {
     applyTheme(theme);
-    try { localStorage.setItem("fb-theme", theme); } catch {}
+    try {
+      localStorage.setItem("fb-theme", theme);
+    } catch {}
   }, [theme, applyTheme]);
 
   const toggleTheme = useCallback(() => {
-    setTheme(t => {
+    setTheme((t) => {
       const next = t === "dark" ? "light" : "dark";
       /* Apply immediately so there's no frame delay */
       const el = containerRef.current;
       if (el) {
-        if (next === "dark") { el.classList.add("dark"); } else { el.classList.remove("dark"); }
+        if (next === "dark") {
+          el.classList.add("dark");
+        } else {
+          el.classList.remove("dark");
+        }
       }
-      try { localStorage.setItem("fb-theme", next); } catch {}
+      try {
+        localStorage.setItem("fb-theme", next);
+      } catch {}
       return next;
     });
   }, []);
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, isDark: theme === "dark", containerRef }}>
+    <ThemeContext.Provider
+      value={{ theme, toggleTheme, isDark: theme === "dark", containerRef }}
+    >
       {children}
     </ThemeContext.Provider>
   );
