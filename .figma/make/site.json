@@ -1,0 +1,11 @@
+{
+  "title": "FoodBridge — Cloud-Native Food Rescue Network",
+  "description": "FoodBridge connects surplus food donors with NGOs and volunteer drivers. Real-time matching, live delivery tracking, and measurable impact.",
+  "robots": {
+    "index": true
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
