@@ -188,7 +188,7 @@ export default function MyDeliveries() {
           {/* Completed */}
           <TabsContent value="completed" className="mt-4">
             <Card className="overflow-hidden">
-              <div className="grid-scroll">
+              <div className="grid-scroll" style={{ height: "calc(100vh - 260px)", minHeight: 220 }}>
                 <table className="w-full text-sm border-collapse">
                   <thead>
                     <tr>

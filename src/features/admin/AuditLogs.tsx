@@ -16,7 +16,7 @@ type LogRow = { ts: string; user: string; role: string; action: string; resource
 type SortCol = keyof LogRow;
 type SortDir = "asc" | "desc" | null;
 
-const AL_PER_PAGE = 20;
+const PAGE_SIZES = [10, 20, 50, 100] as const;
 
 function SortIcon({ col, sortCol, dir }: { col: string; sortCol: string | null; dir: SortDir }) {
   if (sortCol !== col) return <ChevronsUpDown size={11} className="opacity-30 ml-1 inline-block" />;
@@ -27,6 +27,7 @@ function SortIcon({ col, sortCol, dir }: { col: string; sortCol: string | null; 
 export default function AuditLogs() {
   const [alPage, setAlPage] = useState(1);
   const [alSearch, setAlSearch] = useState("");
+  const [pageSize, setPageSize] = useState<typeof PAGE_SIZES[number]>(20);
   const [sortCol, setSortCol] = useState<SortCol | null>(null);
   const [sortDir, setSortDir] = useState<SortDir>(null);
 
@@ -57,8 +58,8 @@ export default function AuditLogs() {
     return rows;
   }, [allLogs, alSearch, sortCol, sortDir]);
 
-  const totalPages = Math.ceil(filtered.length / AL_PER_PAGE);
-  const logs = filtered.slice((alPage-1)*AL_PER_PAGE, alPage*AL_PER_PAGE);
+  const totalPages = Math.ceil(filtered.length / pageSize);
+  const logs = filtered.slice((alPage-1)*pageSize, alPage*pageSize);
 
   function toggleSort(col: SortCol) {
     if (sortCol !== col) { setSortCol(col); setSortDir("asc"); }
@@ -66,6 +67,7 @@ export default function AuditLogs() {
     else { setSortCol(null); setSortDir(null); }
     setAlPage(1);
   }
+  function handlePageSize(ps: typeof PAGE_SIZES[number]) { setPageSize(ps); setAlPage(1); }
 
   const cols: { key: SortCol; label: string }[] = [
     { key: "ts", label: "Timestamp" },
@@ -81,23 +83,36 @@ export default function AuditLogs() {
   const headCls = "grid-sticky-head th-sort h-9 px-3 text-left text-[10px] font-bold uppercase tracking-[0.07em] text-muted-foreground";
 
   return (
-    <div className="p-4 sm:p-6 space-y-5">
+    <div className="p-4 sm:p-6 flex flex-col gap-4 sm:gap-5">
+      {/* Header */}
       <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight text-foreground">Audit Logs</h1>
           <p className="text-sm text-muted-foreground mt-1">Enterprise-grade audit trail of all platform actions</p>
         </div>
-        <div className="flex gap-2">
-          <Input type="search" placeholder="Search logs…" className="w-40 sm:w-48 text-sm" value={alSearch} onChange={e=>{setAlSearch(e.target.value);setAlPage(1);}} />
+        <div className="flex gap-2 flex-wrap items-center">
+          <Input type="search" placeholder="Search logs…" className="w-40 sm:w-48 text-sm h-8" value={alSearch} onChange={e=>{setAlSearch(e.target.value);setAlPage(1);}} />
+          <div className="flex items-center gap-1.5">
+            <span className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wide hidden sm:block">Rows</span>
+            <div className="flex gap-0.5 bg-muted p-0.5 rounded-lg">
+              {PAGE_SIZES.map(ps => (
+                <motion.button key={ps} whileTap={{ scale: 0.93 }} onClick={() => handlePageSize(ps)}
+                  className={`px-2 py-1 rounded-md text-xs font-semibold transition-all ${pageSize === ps ? "bg-card text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}>
+                  {ps}
+                </motion.button>
+              ))}
+            </div>
+          </div>
           <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
-            <Button variant="outline" size="sm">Export CSV</Button>
+            <Button variant="outline" size="sm" className="h-8">Export CSV</Button>
           </motion.div>
         </div>
       </motion.div>
 
+      {/* Table */}
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
         <Card className="overflow-hidden">
-          <div className="grid-scroll">
+          <div className="grid-scroll" style={{ height: "calc(100vh - 260px)", minHeight: 260 }}>
             <table className="w-full text-sm border-collapse min-w-[800px]">
               <thead>
                 <tr>
@@ -129,8 +144,11 @@ export default function AuditLogs() {
         </Card>
       </motion.div>
 
-      <div className="flex items-center justify-between">
-        <p className="text-xs text-muted-foreground">Showing {Math.min((alPage-1)*AL_PER_PAGE+1, filtered.length)}–{Math.min(alPage*AL_PER_PAGE, filtered.length)} of {filtered.length} entries</p>
+      {/* Pagination */}
+      <div className="flex items-center justify-between flex-wrap gap-2">
+        <p className="text-xs text-muted-foreground">
+          Showing {Math.min((alPage-1)*pageSize+1, filtered.length)}–{Math.min(alPage*pageSize, filtered.length)} of {filtered.length} entries
+        </p>
         <div className="flex gap-1">
           <Button variant="outline" size="sm" className="h-7 px-2" onClick={()=>setAlPage(p=>Math.max(1,p-1))} disabled={alPage===1}>‹</Button>
           {Array.from({length:Math.min(5,totalPages)},(_,i)=>{const p=alPage<=3?i+1:alPage+i-2;if(p<1||p>totalPages)return null;return(<Button key={p} variant={alPage===p?"default":"outline"} size="sm" className="h-7 w-7 px-0 text-xs" onClick={()=>setAlPage(p)}>{p}</Button>);}).filter(Boolean)}

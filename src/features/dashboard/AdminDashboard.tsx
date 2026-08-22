@@ -72,36 +72,46 @@ export default function AdminDashboard() {
     <div className="space-y-0">
       {/* ── Hero banner ── */}
       <div className="relative overflow-hidden bg-foreground px-6 py-8">
-        <div className="absolute inset-0 opacity-[0.07]" style={{ backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
-        <div className="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-white/5 blur-3xl pointer-events-none" />
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div
+            className="absolute -inset-8"
+            style={{
+              backgroundImage: "radial-gradient(circle, color-mix(in srgb, var(--background) 40%, transparent) 1.5px, transparent 1.5px)",
+              backgroundSize: "28px 28px",
+            }}
+            animate={{ x: [0, 28], y: [0, 28] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+          />
+        </div>
+        <div className="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-background/5 blur-3xl pointer-events-none" />
         <div className="relative z-10 flex items-center justify-between">
           <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
             <div className="flex items-center gap-2 mb-1">
-              <div className="w-6 h-6 rounded-md bg-white/20 flex items-center justify-center">
-                <ShieldCheck size={12} className="text-white" />
+              <div className="w-6 h-6 rounded-md bg-background/20 flex items-center justify-center">
+                <ShieldCheck size={12} className="text-background" />
               </div>
-              <span className="text-white/60 text-xs font-medium">Platform Admin</span>
+              <span className="text-background/60 text-xs font-medium">Platform Admin</span>
             </div>
-            <h1 className="text-2xl font-bold text-white tracking-tight">Admin Dashboard</h1>
-            <p className="text-white/60 text-sm mt-1">
-              <span className="text-white font-semibold">3 pending verifications</span> require your attention.
+            <h1 className="text-2xl font-bold text-background tracking-tight">Admin Dashboard</h1>
+            <p className="text-background/60 text-sm mt-1">
+              <span className="text-background font-semibold">3 pending verifications</span> require your attention.
             </p>
           </motion.div>
           <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }}>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.96 }}>
-              <Button onClick={() => navigate("admin-donations")} className="bg-white text-black hover:bg-white/90 font-semibold shadow-lg shadow-black/20 gap-1.5">
+              <Button onClick={() => navigate("admin-donations")} className="bg-background text-foreground hover:bg-background/90 font-semibold shadow-lg shadow-black/20 gap-1.5">
                 <Settings2 size={14} /> System Monitor
               </Button>
             </motion.div>
           </motion.div>
         </div>
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
-          className="relative z-10 flex gap-5 mt-6 pt-5 border-t border-white/15">
+          className="relative z-10 flex gap-5 mt-6 pt-5 border-t border-background/15">
           {[{ label: "uptime", val: "99.99%" }, { label: "orgs verified", val: "284" }, { label: "today's rescues", val: "1,240 kg" }].map((s, i) => (
             <div key={i} className="flex items-center gap-1.5">
-              <TrendingUp size={10} className="text-white/40" />
-              <span className="text-white font-semibold text-sm">{s.val}</span>
-              <span className="text-white/40 text-xs">{s.label}</span>
+              <TrendingUp size={10} className="text-background/40" />
+              <span className="text-background font-semibold text-sm">{s.val}</span>
+              <span className="text-background/40 text-xs">{s.label}</span>
             </div>
           ))}
         </motion.div>

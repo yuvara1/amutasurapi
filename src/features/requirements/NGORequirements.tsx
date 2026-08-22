@@ -1,11 +1,21 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Edit2, Trash2, CheckCircle, X } from "lucide-react";
+import { Plus, Edit2, Trash2, CheckCircle, X, Leaf, ShoppingBag, Sandwich, UtensilsCrossed, Package, Drumstick } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
+
+const categoryIcon: Record<string, React.ElementType> = {
+  "Produce & Vegetables": Leaf,
+  "Bread & Bakery": ShoppingBag,
+  "Dairy & Eggs": Package,
+  "Prepared Meals": UtensilsCrossed,
+  "Canned & Packaged": Package,
+  "Meat & Protein": Drumstick,
+  "Other": Sandwich,
+};
 
 const requirements = [
   {
@@ -19,7 +29,6 @@ const requirements = [
     requiredBy: "Daily by 2:00 PM",
     status: "active",
     matches: 4,
-    emoji: "🥦",
   },
   {
     id: "REQ-00028",
@@ -32,7 +41,6 @@ const requirements = [
     requiredBy: "Mon–Fri by 9:00 AM",
     status: "active",
     matches: 2,
-    emoji: "🍞",
   },
   {
     id: "REQ-00025",
@@ -45,7 +53,6 @@ const requirements = [
     requiredBy: "As needed",
     status: "paused",
     matches: 0,
-    emoji: "🍱",
   },
 ];
 
@@ -176,10 +183,10 @@ export default function NGORequirements() {
               <CardContent className="p-5">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-start gap-3">
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-xl ${
-                      r.status === "active" ? "bg-primary/8" : "bg-muted"
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
+                      r.status === "active" ? "bg-muted text-foreground" : "bg-muted text-muted-foreground"
                     }`}>
-                      {r.emoji}
+                      {(() => { const Icon = categoryIcon[r.category] ?? Package; return <Icon size={18} />; })()}
                     </div>
                     <div>
                       <div className="flex items-center gap-2 flex-wrap">

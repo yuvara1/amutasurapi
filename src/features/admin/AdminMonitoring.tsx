@@ -55,7 +55,7 @@ const deliveryRows = Array.from({ length: 120 }, (_, i) => {
   };
 });
 
-const PAGE_SIZE = 20;
+const PAGE_SIZES = [10, 20, 50, 100] as const;
 type View = "donations" | "deliveries";
 type SortDir = "asc" | "desc" | null;
 
@@ -79,6 +79,7 @@ export default function AdminMonitoring({ view: initialView = "donations" }: { v
   const [statusFilter, setStatusFilter] = useState("all");
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState<typeof PAGE_SIZES[number]>(20);
   const [donSort, setDonSort] = useState<DonCol | null>(null);
   const [donDir, setDonDir] = useState<SortDir>(null);
   const [delSort, setDelSort] = useState<DelCol | null>(null);
@@ -118,10 +119,11 @@ export default function AdminMonitoring({ view: initialView = "donations" }: { v
   }, [statusFilter, search, delSort, delDir]);
 
   const rows = view === "donations" ? filteredDonations : filteredDeliveries;
-  const totalPages = Math.ceil(rows.length / PAGE_SIZE);
-  const pageRows = rows.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  const totalPages = Math.ceil(rows.length / pageSize);
+  const pageRows = rows.slice((page - 1) * pageSize, page * pageSize);
 
   const handleViewSwitch = (v: View) => { setView(v); setPage(1); setStatusFilter("all"); setSearch(""); };
+  const handlePageSize = (ps: typeof PAGE_SIZES[number]) => { setPageSize(ps); setPage(1); };
   const handleFilter = (s: string) => { setStatusFilter(s); setPage(1); };
 
   function toggleDonSort(col: DonCol) {
@@ -138,7 +140,7 @@ export default function AdminMonitoring({ view: initialView = "donations" }: { v
   const headCls = "grid-sticky-head th-sort h-9 px-3 text-left text-[10px] font-bold uppercase tracking-[0.07em] text-muted-foreground";
 
   return (
-    <div className="p-6 space-y-5">
+    <div className="p-4 sm:p-6 flex flex-col gap-4 sm:gap-5">
       {/* Header */}
       <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="flex items-center justify-between flex-wrap gap-3">
         <h1 className="text-xl font-semibold tracking-tight text-foreground">
@@ -204,9 +206,9 @@ export default function AdminMonitoring({ view: initialView = "donations" }: { v
         <div className="relative">
           <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
           <Input value={search} onChange={e => { setSearch(e.target.value); setPage(1); }}
-            placeholder="Search ID, food, donor…" className="pl-8 h-8 text-xs w-56" />
+            placeholder="Search ID, food, donor…" className="pl-8 h-8 text-xs w-48 sm:w-56" />
         </div>
-        <div className="flex flex-wrap gap-1.5 items-center">
+        <div className="flex flex-wrap gap-1.5 items-center flex-1">
           <Filter size={11} className="text-muted-foreground" />
           {(view === "donations" ? donationStatuses : deliveryStatuses).map(s => (
             <motion.button key={s} whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.95 }} onClick={() => handleFilter(s)}
@@ -215,13 +217,25 @@ export default function AdminMonitoring({ view: initialView = "donations" }: { v
             </motion.button>
           ))}
         </div>
+        {/* Page size selector */}
+        <div className="flex items-center gap-1.5">
+          <span className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wide hidden sm:block">Rows</span>
+          <div className="flex gap-0.5 bg-muted p-0.5 rounded-lg">
+            {PAGE_SIZES.map(ps => (
+              <motion.button key={ps} whileTap={{ scale: 0.93 }} onClick={() => handlePageSize(ps)}
+                className={`px-2 py-1 rounded-md text-xs font-semibold transition-all ${pageSize === ps ? "bg-card text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}>
+                {ps}
+              </motion.button>
+            ))}
+          </div>
+        </div>
       </motion.div>
 
       {/* Table */}
       <AnimatePresence mode="wait">
         <motion.div key={view} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.25 }}>
           <Card className="overflow-hidden">
-            <div className="grid-scroll">
+            <div className="grid-scroll" style={{ height: "calc(100vh - 388px)", minHeight: 260 }}>
               <table className="w-full text-sm border-collapse">
                 <thead>
                   {view === "donations" ? (
@@ -298,9 +312,9 @@ export default function AdminMonitoring({ view: initialView = "donations" }: { v
       </AnimatePresence>
 
       {/* Pagination */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-2">
         <p className="text-xs text-muted-foreground">
-          Showing {Math.min((page-1)*PAGE_SIZE+1, rows.length)}–{Math.min(page*PAGE_SIZE, rows.length)} of {rows.length} records
+          Showing {Math.min((page-1)*pageSize+1, rows.length)}–{Math.min(page*pageSize, rows.length)} of {rows.length} records
         </p>
         <div className="flex items-center gap-1">
           <Button variant="outline" size="sm" className="h-7 px-2" onClick={() => setPage(p => Math.max(1, p-1))} disabled={page === 1}>

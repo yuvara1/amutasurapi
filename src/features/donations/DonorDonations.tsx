@@ -14,7 +14,7 @@ type DonRow = { id: string; food: string; qty: string; status: string; ngo: stri
 type SortCol = keyof DonRow;
 type SortDir = "asc" | "desc" | null;
 
-const DD_PER_PAGE = 15;
+const PAGE_SIZES = [10, 20, 50, 100] as const;
 
 function SortIcon({ col, sortCol, dir }: { col: string; sortCol: string | null; dir: SortDir }) {
   if (sortCol !== col) return <ChevronsUpDown size={11} className="opacity-30 ml-1 inline-block" />;
@@ -26,6 +26,7 @@ export default function DonorDonations() {
   const navigate = useNav();
   const [filter, setFilter] = useState("all");
   const [ddPage, setDdPage] = useState(1);
+  const [pageSize, setPageSize] = useState<typeof PAGE_SIZES[number]>(20);
   const [sortCol, setSortCol] = useState<SortCol | null>(null);
   const [sortDir, setSortDir] = useState<SortDir>(null);
 
@@ -59,8 +60,8 @@ export default function DonorDonations() {
     return rows;
   }, [donations, filter, sortCol, sortDir]);
 
-  const totalPages = Math.ceil(filtered.length / DD_PER_PAGE);
-  const pageRows = filtered.slice((ddPage-1)*DD_PER_PAGE, ddPage*DD_PER_PAGE);
+  const totalPages = Math.ceil(filtered.length / pageSize);
+  const pageRows = filtered.slice((ddPage-1)*pageSize, ddPage*pageSize);
 
   function toggleSort(col: SortCol) {
     if (sortCol !== col) { setSortCol(col); setSortDir("asc"); }
@@ -68,6 +69,7 @@ export default function DonorDonations() {
     else { setSortCol(null); setSortDir(null); }
     setDdPage(1);
   }
+  function handlePageSize(ps: typeof PAGE_SIZES[number]) { setPageSize(ps); setDdPage(1); }
 
   const cols: { key: SortCol; label: string }[] = [
     { key: "id", label: "Donation ID" },
@@ -82,7 +84,8 @@ export default function DonorDonations() {
   const headCls = "grid-sticky-head th-sort h-9 px-3 text-left text-[10px] font-bold uppercase tracking-[0.07em] text-muted-foreground";
 
   return (
-    <div className="p-4 sm:p-6 space-y-5">
+    <div className="p-4 sm:p-6 flex flex-col gap-4 sm:gap-5">
+      {/* Header */}
       <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold tracking-tight text-foreground">My Donations</h1>
         <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
@@ -90,18 +93,33 @@ export default function DonorDonations() {
         </motion.div>
       </motion.div>
 
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="flex flex-wrap gap-1.5">
-        {statuses.map(s => (
-          <motion.button key={s} whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} onClick={() => { setFilter(s); setDdPage(1); }}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold capitalize transition-all ${filter === s ? "bg-primary text-primary-foreground shadow-sm" : "bg-muted text-muted-foreground border border-border hover:text-foreground"}`}>
-            {s}
-          </motion.button>
-        ))}
+      {/* Filter + page size row */}
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }} className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap gap-1.5 flex-1">
+          {statuses.map(s => (
+            <motion.button key={s} whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} onClick={() => { setFilter(s); setDdPage(1); }}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold capitalize transition-all ${filter === s ? "bg-primary text-primary-foreground shadow-sm" : "bg-muted text-muted-foreground border border-border hover:text-foreground"}`}>
+              {s}
+            </motion.button>
+          ))}
+        </div>
+        <div className="flex items-center gap-1.5 shrink-0">
+          <span className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wide hidden sm:block">Rows</span>
+          <div className="flex gap-0.5 bg-muted p-0.5 rounded-lg">
+            {PAGE_SIZES.map(ps => (
+              <motion.button key={ps} whileTap={{ scale: 0.93 }} onClick={() => handlePageSize(ps)}
+                className={`px-2 py-1 rounded-md text-xs font-semibold transition-all ${pageSize === ps ? "bg-card text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}>
+                {ps}
+              </motion.button>
+            ))}
+          </div>
+        </div>
       </motion.div>
 
+      {/* Table */}
       <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15, duration: 0.4 }}>
         <Card className="overflow-hidden">
-          <div className="grid-scroll">
+          <div className="grid-scroll" style={{ height: "calc(100vh - 300px)", minHeight: 240 }}>
             <table className="w-full text-sm border-collapse min-w-[640px]">
               <thead>
                 <tr>
@@ -136,8 +154,11 @@ export default function DonorDonations() {
         </Card>
       </motion.div>
 
-      <div className="flex items-center justify-between">
-        <p className="text-xs text-muted-foreground">Showing {Math.min((ddPage-1)*DD_PER_PAGE+1, filtered.length)}–{Math.min(ddPage*DD_PER_PAGE, filtered.length)} of {filtered.length}</p>
+      {/* Pagination */}
+      <div className="flex items-center justify-between flex-wrap gap-2">
+        <p className="text-xs text-muted-foreground">
+          Showing {Math.min((ddPage-1)*pageSize+1, filtered.length)}–{Math.min(ddPage*pageSize, filtered.length)} of {filtered.length}
+        </p>
         <div className="flex gap-1">
           <Button variant="outline" size="sm" className="h-7 px-2" onClick={() => setDdPage(p => Math.max(1,p-1))} disabled={ddPage===1}>‹</Button>
           {Array.from({length:Math.min(5,totalPages)},(_,i)=>{const p=ddPage<=3?i+1:ddPage+i-2;if(p<1||p>totalPages)return null;return(<Button key={p} variant={ddPage===p?"default":"outline"} size="sm" className="h-7 w-7 px-0 text-xs" onClick={()=>setDdPage(p)}>{p}</Button>);}).filter(Boolean)}

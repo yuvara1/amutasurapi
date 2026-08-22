@@ -90,9 +90,9 @@ export default function RightPanel({ role, onNavigate }: RightPanelProps) {
       initial={{ opacity: 0, x: 16 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-      className="hidden xl:flex flex-col w-64 shrink-0 border-l border-border bg-card overflow-y-auto"
+      className="hidden xl:flex flex-col w-64 shrink-0 border-l border-border bg-card h-full overflow-y-auto"
     >
-      <div className="p-4 space-y-4">
+      <div className="flex flex-col p-4 gap-4 min-h-full">
 
         {/* Quick Actions */}
         <div>
@@ -172,7 +172,8 @@ export default function RightPanel({ role, onNavigate }: RightPanelProps) {
 
         <Separator />
 
-        {/* Platform status */}
+        {/* Platform status — pushed to bottom */}
+        <div className="flex-1" />
         <Card className="border-border shadow-none">
           <CardHeader className="pb-2 pt-3 px-3">
             <CardTitle className="text-[11px] font-bold text-foreground flex items-center gap-1.5">
@@ -200,5 +201,6 @@ export default function RightPanel({ role, onNavigate }: RightPanelProps) {
 
       </div>
     </motion.aside>
+
   );
 }
