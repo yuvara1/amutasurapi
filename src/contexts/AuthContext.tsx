@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
+<<<<<<< HEAD
 import { api, isMock, setTokens, clearTokens, getToken } from "@/lib/api";
 
 export type Role = "donor" | "ngo" | "volunteer" | "admin";
@@ -15,21 +16,31 @@ export interface AuthUser {
   avatarUrl?: string;
   verified: boolean;
 }
+=======
+import { api, isMock, setTokens, clearTokens, getToken } from "@/infrastructure/api/client";
+import type { Role, AuthUser, RegisterPayload } from "@/types";
+>>>>>>> origin/bw-redesign-clean
 
 interface AuthContextValue {
   role: Role;
   user: AuthUser | null;
   isAuthenticated: boolean;
   isLoading: boolean;
+<<<<<<< HEAD
   /** Mock-only: set role without hitting the server (used by Auth page in mock mode). */
   login: (role: Role) => void;
   /** Real API: POST /auth/login → returns token, sets auth state. */
   loginWithCredentials: (email: string, password: string) => Promise<void>;
   /** Real API: POST /auth/register → returns token, sets auth state. */
+=======
+  login: (role: Role) => void;
+  loginWithCredentials: (email: string, password: string) => Promise<void>;
+>>>>>>> origin/bw-redesign-clean
   register: (payload: RegisterPayload) => Promise<void>;
   logout: () => Promise<void>;
 }
 
+<<<<<<< HEAD
 export interface RegisterPayload {
   name: string;
   email: string;
@@ -39,6 +50,8 @@ export interface RegisterPayload {
   orgName?: string;
 }
 
+=======
+>>>>>>> origin/bw-redesign-clean
 interface AuthResponse {
   user: AuthUser;
   token: string;
@@ -53,7 +66,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(!isMock);
 
+<<<<<<< HEAD
   /* Re-hydrate from stored token on mount (real API only). */
+=======
+>>>>>>> origin/bw-redesign-clean
   useEffect(() => {
     if (isMock) return;
     const token = getToken();
@@ -69,7 +85,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       .finally(() => setIsLoading(false));
   }, []);
 
+<<<<<<< HEAD
   /* Mock-mode fast-login (no network call). */
+=======
+>>>>>>> origin/bw-redesign-clean
   const login = (r: Role) => {
     setRole(r);
     setIsAuthenticated(true);
@@ -112,3 +131,8 @@ export function useAuth() {
   if (!ctx) throw new Error("useAuth must be used within AuthProvider");
   return ctx;
 }
+<<<<<<< HEAD
+=======
+
+export type { Role, AuthUser, RegisterPayload };
+>>>>>>> origin/bw-redesign-clean

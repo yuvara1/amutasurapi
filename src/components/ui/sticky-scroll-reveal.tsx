@@ -81,11 +81,18 @@ export const StickyScroll = ({
                     "relative w-full overflow-hidden bg-[#0a0a0f] border-t border-white/[0.06]",
                     contentClassName,
                   )}
+<<<<<<< HEAD
                   style={{ height: 320 }}
                 >
                   {item.content}
                   <div
                     className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
+=======
+                >
+                  {item.content}
+                  <div
+                    className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none"
+>>>>>>> origin/bw-redesign-clean
                     style={{ background: `linear-gradient(to top, ${accent}18, transparent)` }}
                   />
                 </div>
@@ -160,7 +167,11 @@ export const StickyScroll = ({
         {/* Right — sticky visual panel (responsive square, never overflows the row) */}
         <div
           className={cn(
+<<<<<<< HEAD
             "sticky top-6 flex w-[38%] max-w-[480px] min-w-[280px] h-[calc(100%-3rem)] shrink-0 items-center justify-center self-start rounded-2xl overflow-hidden border border-white/[0.08] bg-[#0a0a0f]",
+=======
+            "sticky top-4 flex w-[38%] max-w-[480px] min-w-[280px] h-[calc(100%-2rem)] shrink-0 items-center justify-center self-start rounded-2xl overflow-hidden border border-white/[0.08] bg-[#0a0a0f]",
+>>>>>>> origin/bw-redesign-clean
             contentClassName,
           )}
         >

@@ -1,18 +1,10 @@
-<<<<<<< HEAD
-/* Central API client.
- *
- * When VITE_API_BASE_URL is set every call goes to the real backend.
- * When it is empty the `isMock` flag is true and callers fall back to
- * their local mock data so the app works without a running server.
- */
-
 const BASE = (import.meta.env.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, "") ?? "";
 const WS_BASE = (import.meta.env.VITE_WS_URL as string | undefined) ?? "";
 
 export const isMock = !BASE;
 export const wsUrl = WS_BASE;
 
-/* ── Token storage ──────────────────────────────────────── */
+/* ── Token storage ───────────────────────────────────────────── */
 
 const TOKEN_KEY = "fb_token";
 const REFRESH_KEY = "fb_refresh";
@@ -20,19 +12,22 @@ const REFRESH_KEY = "fb_refresh";
 export function getToken(): string | null {
   return localStorage.getItem(TOKEN_KEY);
 }
-export function setTokens(token: string, refreshToken: string) {
-  localStorage.setItem(TOKEN_KEY, token);
-  localStorage.setItem(REFRESH_KEY, refreshToken);
+
+export function setTokens(access: string, refresh: string): void {
+  localStorage.setItem(TOKEN_KEY, access);
+  localStorage.setItem(REFRESH_KEY, refresh);
 }
-export function clearTokens() {
+
+export function clearTokens(): void {
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(REFRESH_KEY);
 }
+
 export function getRefreshToken(): string | null {
   return localStorage.getItem(REFRESH_KEY);
 }
 
-/* ── Typed API error ────────────────────────────────────── */
+/* ── Error type ──────────────────────────────────────────────── */
 
 export class ApiError extends Error {
   constructor(
@@ -46,11 +41,10 @@ export class ApiError extends Error {
   }
 }
 
-/* ── Core fetch wrapper ─────────────────────────────────── */
+/* ── Fetch wrapper ───────────────────────────────────────────── */
 
 type FetchOptions = Omit<RequestInit, "body"> & {
   body?: unknown;
-  /** Skip the Authorization header (used for login / register). */
   public?: boolean;
 };
 
@@ -93,7 +87,14 @@ export async function apiFetch<T = unknown>(
   return json as T;
 }
 
-/* ── Convenience shorthands ─────────────────────────────── */
+/* ── Paginated envelope ──────────────────────────────────────── */
+
+export interface PaginatedResponse<T> {
+  data: T[];
+  meta: { page: number; limit: number; total: number; totalPages: number };
+}
+
+/* ── Convenience shorthands ──────────────────────────────────── */
 
 export const api = {
   get: <T>(path: string, opts?: FetchOptions) =>
@@ -108,13 +109,3 @@ export const api = {
   delete: <T>(path: string, opts?: FetchOptions) =>
     apiFetch<T>(path, { method: "DELETE", ...opts }),
 };
-
-/* ── Paginated envelope helper ──────────────────────────── */
-
-export interface PaginatedResponse<T> {
-  data: T[];
-  meta: { page: number; limit: number; total: number; totalPages: number };
-}
-=======
-export * from "@/infrastructure/api/client";
->>>>>>> origin/bw-redesign-clean

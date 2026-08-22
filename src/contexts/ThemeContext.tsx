@@ -21,7 +21,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     try {
       const stored = localStorage.getItem("fb-theme") as Theme | null;
       if (stored === "dark" || stored === "light") return stored;
+<<<<<<< HEAD
       return "light";
+=======
+      return "dark";
+>>>>>>> origin/bw-redesign-clean
     } catch {
       return "light";
     }

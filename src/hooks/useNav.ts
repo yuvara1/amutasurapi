@@ -9,6 +9,7 @@ export const PAGE_TO_PATH: Record<string, string> = {
   "donor-dashboard": "/app/donor/dashboard",
   "donor-donations": "/app/donor/donations",
   "create-donation": "/app/donor/create",
+<<<<<<< HEAD
   "donor-org": "/app/donor/dashboard",
   "donor-impact": "/app/donor/impact",
   "ngo-dashboard": "/app/ngo/dashboard",
@@ -25,6 +26,16 @@ export const PAGE_TO_PATH: Record<string, string> = {
   "admin-users": "/app/admin/users",
   "admin-orgs": "/app/admin/orgs",
   "admin-verify": "/app/admin/verify",
+=======
+  "donor-impact": "/app/donor/impact",
+  "ngo-dashboard": "/app/ngo/dashboard",
+  "ngo-requirements": "/app/ngo/requirements",
+  "ngo-accepted": "/app/ngo/accepted",
+  "ngo-impact": "/app/ngo/impact",
+  "volunteer-dashboard": "/app/volunteer/dashboard",
+  "my-deliveries": "/app/volunteer/my-deliveries",
+  "admin-dashboard": "/app/admin/dashboard",
+>>>>>>> origin/bw-redesign-clean
   "admin-donations": "/app/admin/donations",
   "admin-deliveries": "/app/admin/deliveries",
   "audit-logs": "/app/admin/audit-logs",

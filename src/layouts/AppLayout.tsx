@@ -5,6 +5,7 @@ import { ThemeProvider, useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useNav, PATH_TO_PAGE } from "@/hooks/useNav";
+<<<<<<< HEAD
 import AppSidebar, { SidebarNavContent } from "@/components/Sidebar";
 import Header from "@/components/Header";
 import RightPanel from "@/components/RightPanel";
@@ -43,6 +44,34 @@ const breadcrumbs: Record<string, string[]> = {
 
 const notifCounts: Record<string, number> = {
   donor: 3, ngo: 5, volunteer: 2, admin: 7,
+=======
+import AppSidebar, { SidebarNavContent } from "@/components/layout/Sidebar";
+import Header from "@/components/layout/Header";
+import RightPanel from "@/components/layout/RightPanel";
+import Modal from "@/components/layout/Modal";
+
+const DeliveryTracking = lazy(() => import("@/features/deliveries/DeliveryTracking"));
+const DonationDetails = lazy(() => import("@/features/donations/DonationDetails"));
+
+const breadcrumbs: Record<string, string[]> = {
+  "donor-dashboard":    ["Donor", "Dashboard"],
+  "donor-donations":    ["Donor", "My Donations"],
+  "create-donation":    ["Donor", "Create Donation"],
+  "donor-impact":       ["Donor", "Impact"],
+  "ngo-dashboard":      ["NGO", "Dashboard"],
+  "ngo-requirements":   ["NGO", "Food Requirements"],
+  "ngo-accepted":       ["NGO", "Accepted Donations"],
+  "ngo-impact":         ["NGO", "Impact"],
+  "volunteer-dashboard":["Volunteer", "Dashboard"],
+  "my-deliveries":      ["Volunteer", "My Deliveries"],
+  "admin-dashboard":    ["Admin", "Dashboard"],
+  "admin-donations":    ["Admin", "Donation Monitoring"],
+  "admin-deliveries":   ["Admin", "Delivery Monitoring"],
+  "audit-logs":         ["Admin", "Audit Logs"],
+  analytics:            ["Analytics"],
+  notifications:        ["Notifications"],
+  settings:             ["Settings"],
+>>>>>>> origin/bw-redesign-clean
 };
 
 function PageSkeleton() {
@@ -84,12 +113,17 @@ function Shell() {
   return (
     <MotionConfig transition={isMobile ? { duration: 0.12, ease: "easeOut" } : undefined}>
       <div ref={containerRef} className="flex h-screen bg-background overflow-hidden">
+<<<<<<< HEAD
         <AppSidebar role={role} currentPage={currentPage} onNavigate={onNavigate} />
+=======
+        <AppSidebar currentPage={currentPage} onNavigate={onNavigate} />
+>>>>>>> origin/bw-redesign-clean
 
         {/* Mobile sidebar drawer */}
         <AnimatePresence>
           {sidebarOpen && (
             <>
+<<<<<<< HEAD
               <motion.div key="overlay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }} onClick={() => setSidebarOpen(false)}
                 className="fixed inset-0 bg-black/40 z-40 md:hidden backdrop-blur-sm" />
@@ -99,6 +133,27 @@ function Shell() {
                 <SidebarNavContent role={role} currentPage={currentPage}
                   onNavigate={(p) => { onNavigate(p); setSidebarOpen(false); }}
                   onClose={() => setSidebarOpen(false)} expanded={true} />
+=======
+              <motion.div
+                key="overlay"
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                onClick={() => setSidebarOpen(false)}
+                className="fixed inset-0 bg-black/40 z-40 md:hidden backdrop-blur-sm"
+              />
+              <motion.div
+                key="drawer"
+                initial={{ x: "-100%" }} animate={{ x: 0 }} exit={{ x: "-100%" }}
+                transition={{ type: "spring", stiffness: 300, damping: 32 }}
+                className="fixed inset-y-0 left-0 z-50 md:hidden shadow-xl w-[224px]"
+              >
+                <SidebarNavContent
+                  currentPage={currentPage}
+                  onNavigate={(p) => { onNavigate(p); setSidebarOpen(false); }}
+                  onClose={() => setSidebarOpen(false)}
+                  expanded={true}
+                />
+>>>>>>> origin/bw-redesign-clean
               </motion.div>
             </>
           )}
@@ -108,16 +163,30 @@ function Shell() {
           <Header
             title={crumbs[crumbs.length - 1]}
             breadcrumb={crumbs}
+<<<<<<< HEAD
             notifCount={notifCounts[role] ?? 0}
+=======
+>>>>>>> origin/bw-redesign-clean
             onMenuToggle={() => setSidebarOpen(true)}
             onNavigate={onNavigate}
           />
           <div className="flex-1 flex min-h-0 overflow-hidden">
             <main className="flex-1 overflow-y-auto min-w-0 flex flex-col">
               <AnimatePresence mode="wait">
+<<<<<<< HEAD
                 <motion.div key={location.pathname} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
                   className="flex-1 flex flex-col min-h-0">
+=======
+                <motion.div
+                  key={location.pathname}
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                  className="flex-1 flex flex-col min-h-0"
+                >
+>>>>>>> origin/bw-redesign-clean
                   <Suspense fallback={<PageSkeleton />}>
                     <Outlet />
                   </Suspense>
@@ -130,12 +199,20 @@ function Shell() {
 
         <Modal open={modal === "donation-details"} onClose={closeModal} size="xl">
           <Suspense fallback={null}>
+<<<<<<< HEAD
             <DonationDetails onNavigate={(p) => { closeModal(); onNavigate(p); }} />
+=======
+            <DonationDetails />
+>>>>>>> origin/bw-redesign-clean
           </Suspense>
         </Modal>
         <Modal open={modal === "delivery-tracking"} onClose={closeModal} size="xl">
           <Suspense fallback={null}>
+<<<<<<< HEAD
             <DeliveryTracking onNavigate={(p) => { closeModal(); onNavigate(p); }} />
+=======
+            <DeliveryTracking />
+>>>>>>> origin/bw-redesign-clean
           </Suspense>
         </Modal>
       </div>
@@ -145,11 +222,19 @@ function Shell() {
 
 export default function AppLayout() {
   const { isAuthenticated, isLoading } = useAuth();
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/bw-redesign-clean
   if (isLoading) return (
     <div className="flex h-screen items-center justify-center bg-background">
       <div className="w-8 h-8 rounded-full border-2 border-primary border-t-transparent animate-spin" />
     </div>
   );
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/bw-redesign-clean
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   return (

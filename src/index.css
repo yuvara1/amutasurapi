@@ -5,6 +5,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
+<<<<<<< HEAD
 /* ── shadcn CSS variables — warm archival palette ──────────── */
 :root {
   --background:                  #F6F4EE;
@@ -40,10 +41,48 @@
   --sidebar-accent-foreground:   #1E5C25;
   --sidebar-border:              #DDD9CE;
   --sidebar-ring:                #1E5C25;
+=======
+/* ── shadcn CSS variables — black & white ──────────────────── */
+:root {
+  --background:                  #FFFFFF;
+  --foreground:                  #000000;
+  --card:                        #FFFFFF;
+  --card-foreground:             #000000;
+  --popover:                     #FFFFFF;
+  --popover-foreground:          #000000;
+  --primary:                     #000000;
+  --primary-foreground:          #FFFFFF;
+  --secondary:                   #F4F4F5;
+  --secondary-foreground:        #000000;
+  --muted:                       #F4F4F5;
+  --muted-foreground:            #71717A;
+  --accent:                      #F4F4F5;
+  --accent-foreground:           #000000;
+  --destructive:                 #000000;
+  --destructive-foreground:      #FFFFFF;
+  --border:                      #E4E4E7;
+  --input:                       #E4E4E7;
+  --ring:                        #000000;
+  --radius:                      0.5rem;
+  --chart-1:                     #000000;
+  --chart-2:                     #52525B;
+  --chart-3:                     #A1A1AA;
+  --chart-4:                     #D4D4D8;
+  --chart-5:                     #27272A;
+  --sidebar:                     #FFFFFF;
+  --sidebar-foreground:          #000000;
+  --sidebar-primary:             #000000;
+  --sidebar-primary-foreground:  #FFFFFF;
+  --sidebar-accent:              #F4F4F5;
+  --sidebar-accent-foreground:   #000000;
+  --sidebar-border:              #E4E4E7;
+  --sidebar-ring:                #000000;
+>>>>>>> origin/bw-redesign-clean
 }
 
 .dark {
   --background:          #000000;
+<<<<<<< HEAD
   --foreground:          #F0EFED;
   --card:                #0D0D0D;
   --card-foreground:     #F0EFED;
@@ -65,6 +104,39 @@
   --sidebar:             #0D0D0D;
   --sidebar-foreground:  #F0EFED;
   --sidebar-border:      #1A1A1A;
+=======
+  --foreground:          #EDEDED;
+  --card:                #0D0D0D;
+  --card-foreground:     #EDEDED;
+  --popover:             #0D0D0D;
+  --popover-foreground:  #EDEDED;
+  --primary:             #FFFFFF;
+  --primary-foreground:  #000000;
+  --secondary:           #1A1A1A;
+  --secondary-foreground:#EDEDED;
+  --muted:               #1A1A1A;
+  --muted-foreground:    #888888;
+  --accent:              #1A1A1A;
+  --accent-foreground:   #EDEDED;
+  --destructive:         #FFFFFF;
+  --destructive-foreground: #000000;
+  --border:              #242424;
+  --input:               #1A1A1A;
+  --ring:                #FFFFFF;
+  --chart-1:             #FFFFFF;
+  --chart-2:             #A1A1AA;
+  --chart-3:             #52525B;
+  --chart-4:             #3F3F46;
+  --chart-5:             #D4D4D8;
+  --sidebar:             #0D0D0D;
+  --sidebar-foreground:  #EDEDED;
+  --sidebar-primary:     #FFFFFF;
+  --sidebar-primary-foreground: #000000;
+  --sidebar-accent:      #1A1A1A;
+  --sidebar-accent-foreground: #EDEDED;
+  --sidebar-border:      #1A1A1A;
+  --sidebar-ring:        #FFFFFF;
+>>>>>>> origin/bw-redesign-clean
 }
 
 /* ── @theme inline ──────────────────────────────────────────── */
@@ -113,6 +185,7 @@
   --radius-xl:  calc(var(--radius) * 1.4);
   --radius-2xl: calc(var(--radius) * 1.8);
 
+<<<<<<< HEAD
   /* Brand */
   --color-brand-50:  #EEF5EF;
   --color-brand-100: #D4E8D5;
@@ -144,6 +217,33 @@
   --color-rose-500: #D63A4E;
   --color-rose-600: #B52D40;
   --color-violet-500: #6E4FCC;
+=======
+  /* Brand — monochrome */
+  --color-brand-50:  #FAFAFA;
+  --color-brand-100: #F4F4F5;
+  --color-brand-200: #E4E4E7;
+  --color-brand-300: #D1D1D6;
+  --color-brand-400: #A1A1AA;
+  --color-brand-500: #71717A;
+  --color-brand-600: #52525B;
+  --color-brand-700: #3F3F46;
+  --color-brand-800: #27272A;
+  --color-brand-900: #18181B;
+
+  /* Slate → clean white-based neutrals */
+  --color-slate-50:  #FAFAFA;
+  --color-slate-100: #F4F4F5;
+  --color-slate-200: #E4E4E7;
+  --color-slate-300: #D1D1D6;
+  --color-slate-400: #A1A1AA;
+  --color-slate-500: #71717A;
+  --color-slate-600: #52525B;
+  --color-slate-700: #3F3F46;
+  --color-slate-800: #27272A;
+  --color-slate-900: #18181B;
+  --color-slate-950: #09090B;
+
+>>>>>>> origin/bw-redesign-clean
 }
 
 /* ── Base layer ─────────────────────────────────────────────── */
@@ -272,6 +372,7 @@
   border-left: 2px solid transparent; margin-left: -2px;
 }
 .sidebar-link:hover { background: var(--muted); color: var(--foreground); }
+<<<<<<< HEAD
 .sidebar-link.active { background: var(--accent); color: var(--primary); border-left-color: var(--primary); font-weight: 600; }
 .sidebar-link.active svg { color: var(--primary); }
 
@@ -281,11 +382,28 @@
 .stat-gradient-amber  { background: linear-gradient(140deg, #B57A10 0%, #7A5209 100%); }
 .stat-gradient-violet { background: linear-gradient(140deg, #6E4FCC 0%, #3F2B8A 100%); }
 .stat-gradient-rose   { background: linear-gradient(140deg, #D63A4E 0%, #8C1E2E 100%); }
+=======
+.sidebar-link.active { background: var(--muted); color: var(--foreground); border-left-color: var(--foreground); font-weight: 600; }
+.sidebar-link.active svg { color: var(--foreground); }
+
+/* ── Stat card gradients ────────────────────────────────────── */
+.stat-gradient-green  { background: linear-gradient(140deg, #18181B 0%, #3F3F46 100%); }
+.stat-gradient-sky    { background: linear-gradient(140deg, #27272A 0%, #52525B 100%); }
+.stat-gradient-amber  { background: linear-gradient(140deg, #3F3F46 0%, #71717A 100%); }
+.stat-gradient-violet { background: linear-gradient(140deg, #18181B 0%, #3F3F46 100%); }
+.stat-gradient-rose   { background: linear-gradient(140deg, #09090B 0%, #27272A 100%); }
+.dark .stat-gradient-green  { background: linear-gradient(140deg, #1E1E20 0%, #38383C 100%); }
+.dark .stat-gradient-sky    { background: linear-gradient(140deg, #252528 0%, #424248 100%); }
+.dark .stat-gradient-amber  { background: linear-gradient(140deg, #2E2E32 0%, #4E4E54 100%); }
+.dark .stat-gradient-violet { background: linear-gradient(140deg, #1A1A1E 0%, #36363C 100%); }
+.dark .stat-gradient-rose   { background: linear-gradient(140deg, #161618 0%, #2C2C30 100%); }
+>>>>>>> origin/bw-redesign-clean
 
 /* ── Status badges ──────────────────────────────────────────── */
 .badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 4px; font-size: 0.6875rem; font-weight: 600; font-family: var(--font-sans); letter-spacing: 0.04em; text-transform: uppercase; }
 
 /* Light */
+<<<<<<< HEAD
 .badge-draft      { background: #EDEBE3; color: #524F41; border: 1px solid #DDD9CE; }
 .badge-published  { background: #D5EBF6; color: #145F83; border: 1px solid #A8D3EB; }
 .badge-matched    { background: #E1D6F4; color: #5538AD; border: 1px solid #C4B2EC; }
@@ -314,13 +432,47 @@
 .dark .badge-verified   { background: rgba(30,92,37,0.2);   color: #74AE76; border-color: rgba(74,145,80,0.35); }
 .dark .badge-failure    { background: rgba(214,58,78,0.15);  color: #F0B8BD; border-color: rgba(214,58,78,0.35); }
 .dark .badge-success    { background: rgba(30,92,37,0.2);   color: #74AE76; border-color: rgba(74,145,80,0.35); }
+=======
+.badge-draft      { background: #F4F4F5; color: #52525B; border: 1px solid #E4E4E7; }
+.badge-published  { background: #E4E4E7; color: #27272A; border: 1px solid #D1D1D6; }
+.badge-matched    { background: #F4F4F5; color: #3F3F46; border: 1px solid #D1D1D6; }
+.badge-accepted   { background: #000000; color: #FFFFFF; border: 1px solid #000000; }
+.badge-pickup     { background: #E4E4E7; color: #3F3F46; border: 1px solid #D1D1D6; }
+.badge-delivered  { background: #000000; color: #FFFFFF; border: 1px solid #000000; }
+.badge-expired    { background: #F4F4F5; color: #71717A; border: 1px solid #E4E4E7; }
+.badge-cancelled  { background: #F4F4F5; color: #71717A; border: 1px solid #E4E4E7; }
+.badge-pending    { background: #E4E4E7; color: #3F3F46; border: 1px solid #D1D1D6; }
+.badge-active     { background: #000000; color: #FFFFFF; border: 1px solid #000000; }
+.badge-verified   { background: #000000; color: #FFFFFF; border: 1px solid #000000; }
+.badge-failure    { background: #F4F4F5; color: #52525B; border: 1px solid #E4E4E7; }
+.badge-success    { background: #000000; color: #FFFFFF; border: 1px solid #000000; }
+
+/* Dark overrides */
+.dark .badge-draft      { background: rgba(255,255,255,0.06); color: #A1A1AA; border-color: #3F3F46; }
+.dark .badge-published  { background: rgba(255,255,255,0.10); color: #D4D4D8; border-color: #52525B; }
+.dark .badge-matched    { background: rgba(255,255,255,0.08); color: #D4D4D8; border-color: #3F3F46; }
+.dark .badge-accepted   { background: #FFFFFF;                color: #000000; border-color: #FFFFFF; }
+.dark .badge-pickup     { background: rgba(255,255,255,0.08); color: #D4D4D8; border-color: #3F3F46; }
+.dark .badge-delivered  { background: #FFFFFF;                color: #000000; border-color: #FFFFFF; }
+.dark .badge-expired    { background: rgba(255,255,255,0.04); color: #71717A; border-color: #27272A; }
+.dark .badge-cancelled  { background: rgba(255,255,255,0.04); color: #71717A; border-color: #27272A; }
+.dark .badge-pending    { background: rgba(255,255,255,0.08); color: #D4D4D8; border-color: #3F3F46; }
+.dark .badge-active     { background: #FFFFFF;                color: #000000; border-color: #FFFFFF; }
+.dark .badge-verified   { background: #FFFFFF;                color: #000000; border-color: #FFFFFF; }
+.dark .badge-failure    { background: rgba(255,255,255,0.04); color: #71717A; border-color: #27272A; }
+.dark .badge-success    { background: #FFFFFF;                color: #000000; border-color: #FFFFFF; }
+>>>>>>> origin/bw-redesign-clean
 
 /* ── Aurora landing ─────────────────────────────────────────── */
 .aurora-bg  { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .aurora-blob { position: absolute; border-radius: 9999px; filter: blur(80px); opacity: 0.15; animation: float 8s ease-in-out infinite; }
 
 /* ── Timeline ───────────────────────────────────────────────── */
+<<<<<<< HEAD
 .timeline-line { width: 1px; background: linear-gradient(to bottom, #1E5C25, #A8CFA9); flex-shrink: 0; }
+=======
+.timeline-line { width: 1px; background: linear-gradient(to bottom, var(--foreground), var(--border)); flex-shrink: 0; }
+>>>>>>> origin/bw-redesign-clean
 
 /* ── Card hover ─────────────────────────────────────────────── */
 .card-hover { transition: transform 0.2s ease, box-shadow 0.2s ease; }
@@ -337,12 +489,18 @@
 .fb-input::placeholder { color: var(--muted-foreground); }
 
 /* ── Map ────────────────────────────────────────────────────── */
+<<<<<<< HEAD
 .map-placeholder { background: linear-gradient(160deg, #D4E8D5 0%, #C0D9C2 100%); position: relative; overflow: hidden; }
 .map-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(30,92,37,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(30,92,37,0.07) 1px, transparent 1px); background-size: 28px 28px; }
+=======
+.map-placeholder { background: linear-gradient(160deg, #F4F4F5 0%, #E4E4E7 100%); position: relative; overflow: hidden; }
+.map-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,0,0,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.06) 1px, transparent 1px); background-size: 28px 28px; }
+>>>>>>> origin/bw-redesign-clean
 .map-road { position: absolute; background: rgba(255,255,255,0.7); }
 
 /* ── Progress ───────────────────────────────────────────────── */
 .progress-bar { height: 4px; background: var(--secondary); border-radius: 9999px; overflow: hidden; }
+<<<<<<< HEAD
 .progress-fill { height: 100%; border-radius: 9999px; background: linear-gradient(90deg, #1E5C25, #4C9150); transition: width 0.8s ease; }
 
 /* ── Notification dot ───────────────────────────────────────── */
@@ -352,6 +510,17 @@
 .score-ring { width: 80px; height: 80px; border-radius: 9999px; background: conic-gradient(#1E5C25 var(--score), var(--secondary) 0); display: flex; align-items: center; justify-content: center; position: relative; }
 .score-ring::before { content: ''; position: absolute; width: 58px; height: 58px; background: var(--card); border-radius: 9999px; }
 .score-ring-value { position: relative; z-index: 1; font-weight: 700; font-family: var(--font-serif); font-size: 0.9375rem; color: var(--primary); font-style: italic; }
+=======
+.progress-fill { height: 100%; border-radius: 9999px; background: var(--foreground); transition: width 0.8s ease; }
+
+/* ── Notification dot ───────────────────────────────────────── */
+.notif-dot { position: absolute; top: -2px; right: -2px; width: 8px; height: 8px; background: var(--foreground); border-radius: 9999px; border: 2px solid var(--card); }
+
+/* ── Score ring ─────────────────────────────────────────────── */
+.score-ring { width: 80px; height: 80px; border-radius: 9999px; background: conic-gradient(var(--foreground) var(--score), var(--secondary) 0); display: flex; align-items: center; justify-content: center; position: relative; }
+.score-ring::before { content: ''; position: absolute; width: 58px; height: 58px; background: var(--card); border-radius: 9999px; }
+.score-ring-value { position: relative; z-index: 1; font-weight: 700; font-family: var(--font-serif); font-size: 0.9375rem; color: var(--foreground); font-style: italic; }
+>>>>>>> origin/bw-redesign-clean
 
 /* ── Data table ─────────────────────────────────────────────── */
 .data-table { width: 100%; border-collapse: collapse; }
@@ -363,7 +532,10 @@
 /* ── Professional grid view ─────────────────────────────────── */
 .grid-scroll {
   overflow: auto;
+<<<<<<< HEAD
   max-height: 560px;
+=======
+>>>>>>> origin/bw-redesign-clean
   border-radius: var(--radius);
 }
 .grid-scroll::-webkit-scrollbar { width: 5px; height: 5px; }
@@ -399,12 +571,20 @@
   background-color: transparent;
 }
 .grid-tbody tr:hover {
+<<<<<<< HEAD
   background-color: color-mix(in srgb, var(--primary) 7%, transparent) !important;
+=======
+  background-color: color-mix(in srgb, var(--foreground) 5%, transparent) !important;
+>>>>>>> origin/bw-redesign-clean
 }
 /* Dark mode zebra */
 .dark .grid-tbody tr:nth-child(odd) {
   background-color: rgba(255,255,255,0.03);
 }
 .dark .grid-tbody tr:hover {
+<<<<<<< HEAD
   background-color: rgba(76,145,80,0.08) !important;
+=======
+  background-color: rgba(255,255,255,0.05) !important;
+>>>>>>> origin/bw-redesign-clean
 }
